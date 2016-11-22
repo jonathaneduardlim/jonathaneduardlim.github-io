@@ -1,0 +1,978 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <!-- This page is copyright Elated Communications Ltd. (www.elated.com) -->
+
+    <title>JavaScript tabs example</title>
+
+    <style type="text/css">
+      body { font-size: 16px; font-family: 'Lato', 'Helvetica Neue', Helvetica, Arial, sans-serif;}
+      ul#tabs {list-style-type: none; padding: 1.5em  ;background-color: #095c81;text-align:right; }
+      ul#tabs li { display: inline; }
+      ul#tabs li a { color: #fff; padding: 0.3em; font-family: "Montserrat", "Helvetica Neue", Helvetica, Arial, sans-serif; font-weight: bold; text-decoration:none; font-size: 1.1em;   }
+      ul#tabs li a:hover { background-color: #fff; color: #000; padding:0.8em 0.3em 0.8em 0.3em;  }
+      ul#tabs li a.selected { color: #000; background-color: #fff; font-weight: bold; padding: 0.8em 0.3em 0.8em 0.3em; }
+      div.tabContent { border: 0px solid #c9c3ba; padding: 0.3em; background-color: #fff;text-align:center; margin-top:auto;margin-bottom:auto;  }
+	  div.tabContent.hide { display: none; }
+    
+	</style>
+
+    <script type="text/javascript">
+        //<![CDATA[
+
+    var tabLinks = new Array();
+    var contentDivs = new Array();
+
+    function init() {
+
+      // Grab the tab links and content divs from the page
+      var tabListItems = document.getElementById('tabs').childNodes;
+      for ( var i = 0; i < tabListItems.length; i++ ) {
+        if ( tabListItems[i].nodeName == "LI" ) {
+          var tabLink = getFirstChildWithTagName( tabListItems[i], 'A' );
+          var id = getHash( tabLink.getAttribute('href') );
+          tabLinks[id] = tabLink;
+          contentDivs[id] = document.getElementById( id );
+        }
+      }
+
+      // Assign onclick events to the tab links, and
+      // highlight the first tab
+      var i = 0;
+
+      for ( var id in tabLinks ) {
+        tabLinks[id].onclick = showTab;
+        tabLinks[id].onfocus = function() { this.blur() };
+        if ( i == 0 ) tabLinks[id].className = 'selected';
+        i++;
+      }
+
+      // Hide all content divs except the first
+      var i = 0;
+
+      for ( var id in contentDivs ) {
+        if ( i != 0 ) contentDivs[id].className = 'tabContent hide';
+        i++;
+      }
+    }
+
+    function showTab() {
+      var selectedId = getHash( this.getAttribute('href') );
+
+      // Highlight the selected tab, and dim all others.
+      // Also show the selected content div, and hide all others.
+      for ( var id in contentDivs ) {
+        if ( id == selectedId ) {
+          tabLinks[id].className = 'selected';
+          contentDivs[id].className = 'tabContent';
+        } else {
+          tabLinks[id].className = '';
+          contentDivs[id].className = 'tabContent hide';
+        }
+      }
+
+      // Stop the browser following the link
+      return false;
+    }
+
+    function getFirstChildWithTagName( element, tagName ) {
+      for ( var i = 0; i < element.childNodes.length; i++ ) {
+        if ( element.childNodes[i].nodeName == tagName ) return element.childNodes[i];
+      }
+    }
+
+    function getHash( url ) {
+      var hashPos = url.lastIndexOf ( '#' );
+      return url.substring( hashPos + 1 );
+    }
+
+    //]]>
+    </script>
+  </head>
+  <body onload="init()">
+    <!-- <h1>IS428 Group Project: Forensic Ninja - Email Analysis and Visualisation</h1> -->
+
+    <ul id="tabs">
+      <li><a href="#about">About</a></li>
+      <li><a href="#network">Graph Visualisation</a></li>
+      <li><a href="#conceptmap">Concept Map</a></li>
+    </ul>
+
+    <div class="tabContent" id="about">
+    <style type="text/css">
+      #about{
+	padding:100px 0px;}
+	  img{
+        align: center;
+      }
+
+    table#t01{
+	width:80%;
+	margin-left:auto;
+	margin-right:auto;
+	margin-bottom:0;
+	}
+	table#t01 th{
+	text-align:left;
+	font-size: 24px;
+	background-color: none;}
+	  
+	  table#t02{
+	width:80%;
+	margin-left:auto;
+	margin-right:auto;
+	margin-bottom:0px;
+	margin-top:0px;
+	}
+	table#t02 th{
+	text-align:center;
+	font-size: 18px;
+	background-color: none;}
+	li{
+          list-style-position:inside;
+          padding-left:0;
+		  text-align:center;}  
+table#t03{
+	width:80%;
+
+	margin-left:30%;
+	
+	}		  
+	table#t03 td{
+	text-align:right;
+	font-size: 10px;
+	font-weight: bold;
+	background-color: none;}
+	
+	</style>
+      
+	   <table id = "t01">
+  <tr>
+    
+<th><img src="Gastech-Logo-2.png" width =228px ; height = 80px; style = "float:right"</th>
+    <th>An Interactive Storyboard on Internal Emails of GAStech</th>
+    
+  </tr>
+ 
+</table> 
+<table id = "t02">
+<tr>
+<tr>
+ <th><b> A Brief Introduction to Forensic Ninja Tool</b></th>
+ 
+ </tr>
+ <tr>
+ <td></td>
+ </tr>
+ </table>
+	  
+		<p> This storyboard allows users to explore how Gastech Employees interact through their email in a span of 2 weeks.</p>
+        <p> The storyboard consists of two dashboards namely: 
+       <ol type="1">
+          <li> Graph visualisation which consists of a Force Directed Graph to show the email interactions among the employees </li>
+          <li> Concept map which analyse the keywords of interest from the subject headers of the employees' emails</li></p>
+          <p> For best user experience, view the visualisation using a Chrome browser at zoom level of 90%.</p>
+	 <br>
+	 <br>
+	 <br>
+	  <table id = "t03">
+  <tr>
+   <td>Powered by </td> 
+<td><img src="GroupLogo.png" width =75px ; height = 50px; style = "float:left" </td>
+   
+    
+  </tr>
+ 
+</table> 
+	  
+    </div></div>
+
+    <div class="tabContent" id="network">
+	<style>
+	table#t04{
+	width:70%;
+
+	margin-left:auto;
+margin-right:auto;	
+	}		  
+	table#t04 td{
+	text-align:justify;
+	}
+	</style>
+      <h2>Graph Visualisation: Email exchanges based on Email Sender</h2>
+      <div>
+	  
+        <table id ="t04">
+		<tr>
+		<td>
+		This visualisation shows the interaction among the employees based on their email conversations. 
+		The nodes (in circle) represent the individual employees of GAStech while the edges (lines) represent to whom the particular employee has sent the email to.
+        The nodes are colour coded to represent the different departments that the particular employee belongs to. The legend for the colours can be found at the left handside of the graph.
+		<br>
+		<br>
+		</td>
+		</tr>
+		<tr>
+		<td>
+		
+		<b>Directions:</b><br>
+		1. Hover your mouse over the nodes to see the email interaction. 
+		</td>
+		</tr>
+		</table>
+		
+
+<!--<!DOCTYPE html> -->
+<meta charset="utf-8">
+<style>
+
+.node {
+  stroke: #fff;
+  stroke-width: 1.5px;
+  fill-opacity: 5;
+}
+
+.link1 {
+  stroke: #999;
+  stroke-opacity: .1;
+}
+.text{
+  font: 10 sans-serif
+  pointer-events: none;
+}
+
+</style>
+<body>
+<script src="http://d3js.org/d3.v3.js"></script>
+<script>
+    //Source code from: https://gist.github.com/timelyportfolio/5049980
+    //Credits http://jsfiddle.net/tristanreid/xReHA/636/ for Node Highlight function
+    //http://stackoverflow.com/questions/24703464/finding-adjacent-nodes-in-a-d3-force-graph
+    var width = 1340, //original 1340
+        height = 615;
+        r = 10
+
+    var color1 = d3.scale.ordinal()
+      .domain(["Administration","Engineering","Executive","Facilities", "IT","Security"])
+      .range(["#d53e4f", "#fc8d59" , "#cccc00", "#5ab4ac","#99d594","#3288bd"]);
+
+    var force = d3.layout.force()
+        .charge(-700)
+        .linkDistance(300)
+        .linkStrength(0.5)
+        .gravity(4)
+        .size([width, height]);
+
+    var svg1 = d3.select("#network").append("svg")
+        .attr("width", width)
+        .attr("height", height);
+
+    var rectwidth = 18;
+	var legend1 = svg1.selectAll(".legend")
+                .data(color1.domain())
+                .enter().append("g")
+                .attr("class", "legend")
+                .attr("transform", function (d, i) { 
+
+        var height1 = rectwidth;
+        var x = 10;
+        var y = i* height1 + 40;
+        return 'translate(' + x + ',' + y + ')'; });
+	
+	
+	
+	legend1.append("rect")
+      .attr("x", width/6)
+      .attr("width", 18)
+      .attr("height", 18)
+      .style("fill", color1);
+
+    legend1.append("text")
+      .attr("x", width/6 + 24)
+    .attr("y",9)
+      .attr("dy", "0.45em")
+      .style("text-anchor", "start")
+      .text(function (d) { return d ; });
+
+    d3.csv("kronosnetwork.csv", function (error, data) {
+        //set up graph in same style as original example but empty
+    //data = data.map(function(d) { return [ d.source, d.target, +d.value]; });
+
+        graph = { "nodes": [], "links": [],  };//"legendtext": []
+        //department = {"legendtext": [] }; 
+     
+        //console.log(d.sourcedepartment)
+        //department = { d.sourcedepartment: [] };
+
+        //loop through each link record from the csv data
+        //add to the nodes each source and target; we'll reduce to unique values later
+        //add to the links each source, target record with the value (if desired, multiple value fields can be added)
+        data.forEach(function (d) {
+            graph.nodes.push({ "name": d.source, "group": d.sourcedepartment });
+            graph.nodes.push({ "name": d.target, "group": d.targetdepartment });
+            //department.push({ "legendtext": d.sourcedepartment });
+            //graph.nodes.push({ "source": d.source, "target": d.target, "value": +d.value });
+            graph.links.push({ "source": d.source, "target": d.target, "value": +d.value });
+            //d.source = d.source
+            //d.target = d.target
+            //d.value = +d.value;
+
+});
+        
+
+        //use this as temporary holding while we manipulate graph.nodes
+        //this will contain a map object containing an object for each node
+        //within each node object there will be a child object for each instance that node appear
+        //however, using rollup we can eliminate this duplication
+        var nodesmap = d3.nest()
+                         .key(function (d) { return d.name; })
+                         .rollup(function (d) { return { "name": d[0].name, "group": d[0].group }; }) //"legendtext": d[0].legendtext
+                         .map(graph.nodes);
+
+        //thanks Mike Bostock https://groups.google.com/d/msg/d3-js/pl297cFtIQk/Eso4q_eBu1IJ
+        //this handy little function returns only the distinct / unique nodes
+        graph.nodes = d3.keys(d3.nest()
+                             .key(function (d) { return d.name ; })
+                             .map(graph.nodes));
+
+
+        //it appears d3 with force layout wants a numeric source and target
+        //so loop through each link replacing the text with its index from node
+        graph.links.forEach(function (d, i) {
+            graph.links[i].source = graph.nodes.indexOf(graph.links[i].source);
+            graph.links[i].target = graph.nodes.indexOf(graph.links[i].target);
+        });
+
+        //this is not in the least bit pretty
+        //will get graph.nodes in its final useable form
+        //loop through each unique node and replace with an object with same numeric key and name/group as properties
+        //that will come from the nodesmap that we defined earlier
+        graph.nodes.forEach(function (d,i) { graph.nodes[i]={ "name": nodesmap[d].name, "group": nodesmap[d].group }; })
+
+        //var max = d3.max(data, function(d) { return +d.value;} );
+        //console.log(max); //50 shows
+        
+        //var nodesize = d3.scale.linear()
+        //.domain(0, 50)
+        //.range (0, 50);
+        //console.log(nodesize);
+
+        var link1 = svg1.selectAll(".link1")
+          .data(graph.links)
+        .enter().append("line")
+          .attr("class", "link1")
+          .style("stroke-width", 0.1 );
+//function (d) { return Math.sqrt(d.value); }
+
+        var node = svg1.selectAll(".node")
+          .data(graph.nodes)
+        .enter().append("circle")
+          .attr("class", "node")
+          .attr("r", 10)
+          .style("fill", function (d) { return color1(d.group); })
+          .style("stroke", function(d) { return d3.rgb( color1(d.group) ).darker() });
+          node.call(force.drag);
+          
+          node.on("mouseover", fade(0.1))
+              .on("mouseout", fade(1));
+              //.on("click", click).on("mouseover", function(){return tooltip.style("visibility", "visible") 
+                 //tooltip.text
+                 //;})
+          
+
+        force
+          .nodes(graph.nodes)
+          .links(graph.links)
+          .start();
+
+        node.append("title")
+          .text(function (d) { return d.name; });
+        node.append("text")
+          .text(function (d) { return d3.max(+d.value); })
+
+    var linkedByIndex = {};
+    graph.links.forEach(function(d) {
+        linkedByIndex[d.source.index + "," + d.target.index] = 1;
+    });
+
+    function neighboring(a, b) {
+        return linkedByIndex[a.index + "," + b.index] || linkedByIndex[b.index + "," + a.index] || a.index == b.index;
+    }
+
+    function fade(opacity) {
+        return function(d) {
+            node.style("stroke-opacity", function(o) {
+                thisOpacity = neighboring(d, o) ? 1 : opacity;
+                this.setAttribute('fill-opacity', thisOpacity);
+                return thisOpacity;
+              });
+
+            link1.style("stroke-opacity", opacity).style("stroke-opacity", function(o) {
+                return o.source === d || o.target === d ? 1 : opacity;
+            });
+        };
+    };
+
+//node.on('mouseover', function(d) {
+  //link.style('stroke-width', function(l) {
+    //if (d === l.source || d === l.target)
+      //return 1;
+    //else
+      //return 0.1;
+    //});
+//});
+
+// Set the stroke width back to normal when mouse leaves the node.
+//node.on('mouseout', function() {
+  //link.style('stroke-width', 0.1);
+//});
+
+       force.on("tick", function (d) {
+            link1.attr("x1", function (d) { return d.source.x; })
+            .attr("y1", function (d) { return d.source.y; })
+            .attr("x2", function (d) { return d.target.x; })
+            .attr("y2", function (d) { return d.target.y; });
+
+            node.attr("cx", function (d) { return d.x; })
+            .attr("cy", function (d) { return d.y; });
+       });
+
+  });
+</script>        
+</body>
+
+
+      </div>
+    </div>
+
+    <div class="tabContent" id="conceptmap">
+      <h2>Concept Map</h2>
+      <style>
+	table#t05{
+	width:70%;
+
+	margin-left:auto;
+margin-right:auto;	
+	}		  
+	table#t05 td{
+	text-align:justify;
+	}
+	</style>
+	  <div>
+	  <table id = "t05">
+	  <tr>
+	  <td>
+	  The concept map illustrate the relationship between the keywords of interest identified in the email headers and the employees. 
+	  The inner node(i.e rectangle) represents the individual employees of GAStech.
+	  The inner nodes are colour-coded upon mouseover which represents the different departments that the particular employee is in.
+	  The outer node(i.e words) represent the keywords that are represents work and non-work related content identified from the email headers. 
+	  <br>
+	  <br>
+	  </td>
+	  </tr>
+	  <tr>
+	  <td>
+	  <b>Directions:</b><br>
+	  1.Hover your mouse over the employee names to see which department the employee is from<br> 
+	  2.Hover your mouse over the employee names to see the keywords used in the email headers by the employee<br>
+	  3.Hover your mouse over the employee name to see the actual email headers used in the emails sent<br>
+	  4.Hover your mouse over the keywords to see the employees who have engaged in similar conversations <br>
+	  </td>
+	  </tr>
+	  </table>
+        
+
+<!DOCTYPE html>
+<head>
+	<meta charset="utf-8">
+	<meta name="name" content="Concept Map" />
+	<meta name="description" content="An abstract mapping for parameters. Works best if first tag is 'unique' among the tracklist, and the second tag applies to multiple tracks"/>
+	<meta name="mintags" content="2" />
+	<meta name="maxtags" content="2" />
+	<title>Jam Cellar 2014-05-06</title>
+
+<style>
+
+svg {
+    font: 14px sans-serif;
+	
+}
+
+text {
+    pointer-events: none;
+}
+
+.inner_node rect {
+    pointer-events: all;
+}
+
+.inner_node rect.highlight {
+    stroke: #315B7E;
+    stroke-width: 2px;
+}
+
+.outer_node circle {
+    fill: #fff;
+    stroke: steelblue;
+    stroke-width: 1.5px;
+    pointer-events: all;
+}
+
+.outer_node circle.highlight
+{
+    stroke: #315B7E;
+    stroke-width: 2px;
+}
+
+.link {
+    fill: none;
+}
+                                                                
+      .tooltip {                                                        
+        background: #eee;                                               
+        box-shadow: 0 0 5px #999999;                                    
+        color: #333;                                                    
+        display: none;                                                  
+        font-size: 10px;                                                
+        left: 1100px;                                                    
+        padding: 10px;                                                  
+        position: absolute;                                             
+        text-align: left;                                            
+        top: 440px;                                                      
+        width: 250px;                                                    
+        z-index: 10;}
+		
+	
+	
+		
+                                                                      
+
+</style>	
+</head>
+<body>
+<script src="https://d3js.org/d3.v3.min.js"></script>
+<script>
+//
+// Generated by the Exaile Playlist Analyzer plugin.
+// (C) 2014 Dustin Spicuzza <dustin@virtualroadside.com>
+//
+// This work is licensed under the Creative Commons Attribution 4.0
+// International License. To view a copy of this license, visit
+// http://creativecommons.org/licenses/by/4.0/.
+//
+// Inspired by http://www.findtheconversation.com/concept-map/
+// Loosely based on http://bl.ocks.org/mbostock/4063550
+//
+  var tooltip = d3.select('body')                               // NEW
+          .append('div')                                                // NEW
+          .attr('class', 'tooltip')
+		  
+		  tooltip.append('div')
+		  .attr('class','title')
+		  .style('font-size', '12px')
+		  .text("Emails Sent")
+		  .style("font-weight","bold");
+		  
+		  
+		 ;                                    // NEW
+
+        //tooltip.append('div')                                           // NEW
+          //.attr('class', 'words');                                      // NEW
+
+        //tooltip.append('div')                                           // NEW
+          //.attr('class', 'words');                                      // NEW
+
+        tooltip.append('div')                                           // NEW
+          .attr('class', 'department');
+//var data1 = [];
+//d3.csv("emailtest.csv", function(dt) {
+
+  //data1 = dt.map(function(d) { return [ d.words,d.emails.split(",")]; }); console.log(data1);
+ //var data3 = [];
+  //data1.forEach(function(d){
+	
+	//if (d == null)
+		//return;
+	
+	//i = { name: d[0], email: d[1] };
+	//i.related_nodes = [i.id];
+	//data3.push(i);
+	//console.log(data3);})
+
+var data = [];
+d3.csv("employeerecords.csv", function(dat) {
+
+  data = dat.map(function(d) { return [ d.employee, d.words.split(","), d.department, d.email.split(",")]; });
+  //data.push(dataset)
+
+// transform the data into a useful representation
+// 1 is inner, 2, is outer
+
+// need: inner, outer, links
+//
+// inner: 
+// links: { inner: outer: }
+
+
+var outer = d3.map();
+var inner = [];
+var links = [];
+var outerId = [0];
+
+data.forEach(function(d){
+	
+	if (d == null)
+		return;
+	
+	i = { id: 'i' + inner.length, name: d[0], related_links: [], department: d[2], email: d[3] };
+	i.related_nodes = [i.id];
+	inner.push(i);
+	
+	
+	if (!Array.isArray(d[1]))
+		d[1] = [d[1]];
+	
+	d[1].forEach(function(d1){
+		
+		o = outer.get(d1);
+		
+		if (o == null)
+		{
+			o = { name: d1,	id: 'o' + outerId[0], related_links: [], department: d[2] };
+			o.related_nodes = [o.id];
+			outerId[0] = outerId[0] + 1;	
+			
+			outer.set(d1, o);
+		}
+		
+		// create the links
+		l = { id: 'l-' + i.id + '-' + o.id, inner: i, outer: o, department: d[2] }
+		links.push(l);
+		
+		// and the relationships
+		i.related_nodes.push(o.id);
+		i.related_links.push(l.id);
+		o.related_nodes.push(i.id);
+		o.related_links.push(l.id);
+	});
+	
+});
+
+data = {
+	inner: inner,
+	outer: outer.values(),
+	links: links,
+}
+
+// sort the data -- TODO: have multiple sort options
+outer = data.outer;
+data.outer = Array(outer.length);
+
+
+var i1 = 0;
+var i2 = outer.length - 1;
+
+for (var i = 0; i < data.outer.length; ++i)
+{
+	if (i % 2 == 1)
+		data.outer[i2--] = outer[i];
+	else
+		data.outer[i1++] = outer[i];
+}
+
+console.log(data.outer.reduce(function(a,b) { return a + b.related_links.length; }, 0) / data.outer.length);
+
+
+// from d3 colorbrewer: 
+// This product includes color specifications and designs developed by Cynthia Brewer (http://colorbrewer.org/).
+//var colors = ["#a50026","#d73027","#f46d43","#fdae61","#fee090","#ffffbf","#e0f3f8","#abd9e9","#74add1","#4575b4","#313695"]
+//var color = d3.scale.category20();
+//var color = d3.scale.linear()
+    //.domain([60, 220])
+    //.range([colors.length-1, 0])
+    //.clamp(true);
+	
+var color = d3.scale.ordinal()
+      .domain(["Administration","Engineering","Executive","Facilities", "IT","Security"])
+      .range(["#d53e4f", "#fc8d59" , "#cccc00", "#5ab4ac","#99d594","#3288bd"]);
+
+var diameter = 1600;
+var rect_width = 170;
+var rect_height = 18;
+
+var link_width = "1px"; 
+
+var il = data.inner.length;
+var ol = data.outer.length;
+
+var inner_y = d3.scale.linear()
+    .domain([0, il])
+    .range([-(il * rect_height)/2, (il * rect_height)/2]);
+
+mid = (data.outer.length/2.0)
+var outer_x = d3.scale.linear()
+    .domain([0, mid, mid, data.outer.length])
+    .range([15, 170, 190 ,355]);
+
+var outer_y = d3.scale.linear()
+    .domain([0, data.outer.length])
+    .range([0, diameter / 2 - 120]);
+
+
+// setup positioning
+data.outer = data.outer.map(function(d, i) { 
+    d.x = outer_x(i);
+    d.y = diameter/3;
+    return d;
+});
+
+data.inner = data.inner.map(function(d, i) { 
+    d.x = -(rect_width / 2);
+    d.y = inner_y(i);
+    return d;
+});
+
+
+function get_color(name)
+{
+    var c = Math.round(color(name));
+    if (isNaN(c))
+        return '#dddddd';	// fallback color
+    
+    return colors[c];
+}
+
+// Can't just use d3.svg.diagonal because one edge is in normal space, the
+// other edge is in radial space. Since we can't just ask d3 to do projection
+// of a single point, do it ourselves the same way d3 would do it.  
+
+
+function projectX(x)
+{
+    return ((x - 90) / 180 * Math.PI) - (Math.PI/2);
+}
+
+var diagonal = d3.svg.diagonal()
+    .source(function(d) { return {"x": d.outer.y * Math.cos(projectX(d.outer.x)), 
+                                  "y": -d.outer.y * Math.sin(projectX(d.outer.x))}; })            
+    .target(function(d) { return {"x": d.inner.y + rect_height/2,
+                                  "y": d.outer.x > 180 ? d.inner.x : d.inner.x + rect_width}; })
+    .projection(function(d) { return [d.y, d.x]; });
+
+
+var svg = d3.select("#conceptmap").append("svg")
+    .attr("width", diameter)
+    .attr("height", diameter)
+  .append("g")
+    .attr("transform", "translate(" + diameter/2.3 + "," + 330 + ")scale(.55,.55)");
+
+// links
+var link = svg.append('g').attr('class', 'links').selectAll(".link")
+    .data(data.links)
+  .enter().append('path')
+    .attr('class', 'link')
+    .attr('id', function(d) { return d.id })
+    .attr("d", diagonal)
+    .attr('stroke', '#cccccc')
+    .attr('stroke-width', link_width);
+
+// outer nodes
+
+var onode = svg.append('g').selectAll(".outer_node")
+    .data(data.outer)
+  .enter().append("g")
+    .attr("class", "outer_node")
+    .attr("transform", function(d) { return "rotate(" + (d.x - 90) + ")translate(" + d.y + ")"; })
+    .on("mouseover", mouseover1)
+    .on("mouseout", mouseout);
+
+  
+onode.append("circle")
+    .attr('id', function(d) { return d.id })
+    .attr("r", 4.5);                                       
+  
+onode.append("circle")
+    .attr('r', 20)
+    .attr('visibility', 'hidden');
+  
+onode.append("text")
+	.attr('id', function(d) { return d.id + '-txt'; })
+    .attr("dy", ".31em")
+    .attr("text-anchor", function(d) { return d.x < 180 ? "start" : "end"; })
+    .attr("transform", function(d) { return d.x < 180 ? "translate(8)" : "rotate(180)translate(-8)"; })
+    .text(function(d) { return d.name; });
+  
+// inner nodes
+  
+var inode = svg.append('g').selectAll(".inner_node")
+    .data(data.inner)
+  .enter().append("g")
+    .attr("class", "inner_node")
+    .attr("transform", function(d, i) { return "translate(" + d.x + "," + d.y + ")"})
+    .on("mouseover", mouseover)
+	//.on("mouseover'", function(d) {  
+//var myArray = "";
+//var i = 0;
+		//while (i<2){myArray = myArray + ("<p>"d.inner.email[i]"</p>");
+		//i++;
+		//}
+		
+            //tooltip.select('.words').html(d.name);                // NEW
+          //tooltip.select('.department').html(myArray)});                // NEW
+            //tooltip.select('.percent').html(percent + '%');             // NEW
+            //tooltip.style('display', 'block');                          // NEW
+          //})
+		  //.on('mouseout', function() {                              // NEW
+            //tooltip.style('display', 'none')});  
+	.on("mouseout", mouseout);
+  
+inode.append('rect')
+    .attr('width', rect_width)
+    .attr('height', rect_height)
+    .attr('id', function(d) { return d.id; })
+    //.attr('fill', function(d) { return color(d.department); });
+  .attr('stroke','#fff')
+  .attr('fill','#000000');
+  
+inode.append("text")
+	.attr('id', function(d) { return d.id + '-txt'; })
+    .attr('text-anchor', 'middle')
+    .attr("transform", "translate(" + rect_width/2 + ", " + rect_height * .75 + ")")
+    .text(function(d) { return d.name; })
+	.attr('fill','#fff');
+
+// need to specify x/y/etc
+
+d3.select(self.frameElement).style("height", diameter - 150 + "px");
+//append legend
+
+var legendRectSize = 20;
+var legendSpacing = 5;
+var legend = d3.select("#conceptmap").select("svg")
+    .append("g")
+    .selectAll("g")
+    .data(color.domain())
+    .enter()
+    .append('g')
+      .attr('class', 'legend')
+      .attr('transform', function(d, i) {
+        var height = legendRectSize;
+        var x = diameter/6;
+        var y = i* height +80;
+        return 'translate(' + x + ',' + y + ')scale(.55,.55)';
+    });
+	
+legend.append('rect')
+    .attr('width', legendRectSize)
+    .attr('height', legendRectSize)
+    .style('fill', color)
+    .style('stroke', color);
+
+legend.append('text')
+    .attr('x', legendRectSize + legendSpacing)
+    .attr('y', legendRectSize - legendSpacing )
+    .text(function(d) { return d; });
+
+
+function mouseover(d)
+{
+//tooltip.select('.department').html(d.email);
+//tooltip.style('display', 'block'); 
+
+	// bring to front
+	d3.selectAll('.links .link').sort(function(a, b){ return d.related_links.indexOf(a.id); });	
+	
+    for (var i = 0; i < d.related_nodes.length; i++)
+    {
+        d3.select('#' + d.related_nodes[i]).classed('highlight', true).attr('fill', function(d) { return color(d.department); });
+        d3.select('#' + d.related_nodes[i] + '-txt').attr("font-weight", 'bold').style("font-size","16px");
+		//for (var j = 0;)
+		var myString = "";
+		 //var j = 0;
+		//myString = data.inner.email
+    for(j=0; j<d.email.length;j++){
+       myString = myString + ("<p>" + d.email[j]+ "</p>");
+    }
+d.email.sort(function (a,b) {return d3.ascending(a, b);});
+    //myTollTip.style("opacity", "1")                           
+       //.style("display", "table-cell")  
+       //.style("vertical-align", "top")
+       //var j;
+	  
+		 //var mystring = d3.selectAll("p").data(data.inner).enter().append("p").text(function (d) {return d.email;}); 
+		//console.log(myString.match(/Impact/));
+		tooltip.select('.department').html(myString);
+		              // NEW
+            //tooltip.select('.percent').html(percent + '%');             // NEW
+
+			tooltip.style('display', 'block');                          // NEW
+          
+		
+		
+    }
+    
+    for (var i = 0; i < d.related_links.length; i++)
+        d3.select('#' + d.related_links[i]).attr('stroke-width', '2px')
+		.attr('stroke','#000');
+		
+
+		 
+
+		}
+function mouseover1(d)
+{
+	// bring to front
+	d3.selectAll('.links .link').sort(function(a, b){ return d.related_links.indexOf(a.id); });	
+	
+    for (var i = 0; i < d.related_nodes.length; i++)
+    {
+        d3.select('#' + d.related_nodes[i]).classed('highlight', true).attr('fill', function(d) { return color(d.department); });
+        d3.select('#' + d.related_nodes[i] + '-txt').attr("font-weight", 'bold').style("font-size","16px");
+		//var myString1 = [];
+		 //var j = 0;
+		//myString = data.inner.email
+    //for(j=0; j<d.name.length;j++){
+		//for(k=0; k<data1.length;k++){
+			//if (d.name[j] == data1[k]); {   //Threshold of 15
+			//mystring1.push(data1[k][1]);
+   //console.log(data3);
+    
+
+	   
+    
+
+		//tooltip.select('.department').html(myString1);                // NEW
+            //tooltip.select('.percent').html(percent + '%');             // NEW
+            //tooltip.style('display', 'block');                          // NEW
+          
+		
+		
+    }
+    
+    for (var i = 0; i < d.related_links.length; i++)
+        d3.select('#' + d.related_links[i]).attr('stroke-width', '2px')
+		.attr('stroke','#000');
+}
+function mouseout(d)
+{   	
+    for (var i = 0; i < d.related_nodes.length; i++)
+    {
+        d3.select('#' + d.related_nodes[i]).classed('highlight', false).attr('fill','#000000');
+        d3.select('#' + d.related_nodes[i] + '-txt').attr("font-weight", 'normal').style("font-size","14px");
+		tooltip.style('display', 'none');  
+    }
+    
+    for (var i = 0; i < d.related_links.length; i++)
+        d3.select('#' + d.related_links[i]).attr('stroke-width', link_width)
+		.attr('stroke', '#cccccc');
+}
+});
+</script>
+</body>
+</html>
+      </div>
+    </div>
+   
+  </body>
+</html>
